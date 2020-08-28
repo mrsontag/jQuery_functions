@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Demonstration of jQuery Functionality</title>
+</head>
+<body>
+    <div id="wrapper">
+        <h1>Demonstrate jQuery Functions by Using jQuery Functions</h1>
+
+        <h2>Three types of visibility control:</h2>
+        <div class="thirdPanel">
+            <h4>Show/Hide/Toggle</h4>
+            <p>This content is being operated upon.</p>
+            <button type="button" id="show">Click here to show!</button>
+            <button type="button" id="hide">Click here to hide!</button>
+            <button type="button" id="showtoggle">Click here to toggle!</button>
+        </div>
+        <div class="thirdPanel">
+            <h4>Fade In/Out/Toggle</h4>
+            <p>This content is being operated upon.</p>
+            <button type="button" id="fadein">Click here to show!</button>
+            <button type="button" id="fadeout">Click here to hide!</button>
+            <button type="button" id="fadetoggle">Click here to toggle!</button>
+        </div>
+        <div class="thirdPanel">
+            <h4>Slide In/Out/Toggle</h4>
+            <p>This content is being operated upon.</p>
+            <button type="button" id="slideup">Click here to slide up!</button>
+            <button type="button" id="slidedown">Click here to slide down!</button>
+            <button type="button" id="slidetoggle">Click here to slide toggle!</button>
+        </div>
+        <h2>There are also ways to format text!</h2>
+        <div class="thirdPanel">
+            <h4>Change Colors</h4>
+            <p>This content is being operated upon.</p>
+            <label for="color"> Which color?</label>
+            <input type="text" id="color">
+            <button type="button" id="colorfront">Click here to apply to front!</button>
+            <button type="button" id="colorback">Click here to apply to back!</button>
+        </div>
+        <div class="thirdPanel">
+            <h4>Change Images</h4>
+            <img src="images/cherry.png" alt="A cherry!">
+            <button type="button" id="changeimage">Click here to toggle image!</button>
+        </div>
+        <h2>You can also dynamically change the content:</h2>
+        <div class="thirdPanel">
+            <h4>Add and remove text</h4>
+            <p id="addtarget">This content is being operated upon.</p>
+            <label for="addtext"> What to add?</label>
+            <textarea  id="addtext"></textarea>
+            <div class="options">
+                <label for="before">Before</label>
+                <input type="radio" id="before" name="where" value="before" checked="checked">
+                <label for="after" class="secondlabel">After</label>
+                <input type="radio" id="after" name="where" value="after">
+            </div>
+            <div class="options">
+                <label for="inside">Inside</label>
+                <input type="radio" id="inside" name="inorout" value="inside" checked="checked">
+                <label for="outside" class="secondlabel">Outside</label>
+                <input type="radio" id="outside" name="inorout" value="outside">
+            </div>
+            <button type="button" id="addastext">Click here to add as text!</button>
+            <button type="button" id="addashtml">Click here to add as html!</button>
+            <button type="button" id="revert">Revert back!</button>
+        </div>
+        <div class="thirdPanel">
+            <h4>Change text or HTML content</h4>
+            <p id="texttarget">This content is being operated upon.</p>
+            <label for="changetext"> What to change it to</label>
+            <textarea  id="changetext"></textarea>
+            <button type="button" id="changeastext">Click here to update as text!</button>
+            <button type="button" id="changeashtml">Click here to update as html!</button>
+            <button type="button" id="reverttext">Revert back!</button>
+        </div>
+        <div class="thirdPanel">
+            <h4>Add and remove Classes</h4>
+            <p>This content is being operated upon.</p>
+            <button type="button" id="addsuperbold">Click here to apply superbold!</button>
+            <button type="button" id="removesuperbold">Click here to remove superbold!</button>
+        </div>
+    </div>
+
+
+    <script>
+
+        function isValidColor(colorname) {
+            var tempoption = document.createElement("Option");
+            tempoption.color = colorname;
+            return tempoption.color ==  colorname.toLowerCase();
+        }
+
+        function textencode(stringtoencode) {
+            stringtoencode = stringtoencode.replace(/&/g,"&amp;");
+            stringtoencode = stringtoencode.replace(/</g,"&lt;");
+            stringtoencode = stringtoencode.replace(/>/g,"&gt;");
+            stringtoencode = stringtoencode.replace(/"/g,"&quot;");
+            stringtoencode = stringtoencode.replace(/'/g,"&#39;");
+            return stringtoencode;
+        }
+
+        function whichoptions() {
+            var outputval = 0;
+            if ($("#after").prop("checked")) {
+                outputval += 1;
+            }
+            if ($("#outside").prop("checked")) {
+                outputval += 2;
+            }
+            return outputval;
+        }
+
+        $(document).ready(function () {
+            $("#show").click(function() {
+                $(this).siblings("p").show();
+            })
+            $("#hide").click(function() {
+                $(this).siblings("p").hide();
+            })
+            $("#showtoggle").click(function() {
+                $(this).siblings("p").toggle();
+            })
+            $("#fadein").click(function() {
+                $(this).siblings("p").fadeIn();
+            })
+            $("#fadeout").click(function() {
+                $(this).siblings("p").fadeOut();
+            })
+            $("#fadetoggle").click(function() {
+                $(this).siblings("p").fadeToggle();
+            })
+            $("#slideup").click(function() {
+                $(this).siblings("p").slideUp();
+            })
+            $("#slidedown").click(function() {
+                $(this).siblings("p").slideDown();
+            })
+            $("#slidetoggle").click(function() {
+                $(this).siblings("p").slideToggle();
+            })
+            $("#colorfront").click(function() {
+                var whichcolor = $("#color").val();
+                if (isValidColor(whichcolor)) {
+                    $(this).siblings("p").css("color",whichcolor);
+                }
+                else {
+                    alert(whichcolor + " is not a valid color!");
+                }
+            })
+            $("#colorback").click(function() {
+                var whichcolor = $("#color").val();
+                if (isValidColor(whichcolor)) {
+                    $(this).siblings("p").css("background-color",whichcolor);
+                }
+                else {
+                    alert(whichcolor + " is not a valid color!");
+                }
+            })
+            $("#changeimage").click(function() {
+                var imagetarget = $(this).siblings("img")
+                if (imagetarget.attr("src") == "images/cherry.png") {
+                    imagetarget.attr("src",  "images/coin.png");
+                    imagetarget.attr("alt", "A coin!");
+                }
+                else {
+                    imagetarget.attr("src",  "images/cherry.png");
+                    imagetarget.attr("alt", "A cherry!");
+                }
+            })
+            $("#addastext").click(function () {
+                addtext = $("#addtext").val();
+                console.log(addtext);
+                switch (whichoptions()) {
+                    case 2:
+                        $(this).siblings("#addtarget").before(`<p class="added">${addtext}</p>`)
+                        break;
+                    case 3:
+                        $(this).siblings("#addtarget").after(`<p class="added">${addtext}</p>`)
+                        break;
+                    case 0: 
+                        $(this).siblings("#addtarget").prepend(`<p class="added">${addtext}</p>`)
+                        break;
+                    case 1:
+                        $(this).siblings("#addtarget").append(`<p class="added">${addtext}</p>`)
+                }
+            })
+            $("#addashtml").click(function () {
+                addtext = $("#addtext").val();
+                console.log(addtext);
+                switch (whichoptions()) {
+                    case 2:
+                        $(this).siblings("#addtarget").before(`<p class="added"></p>`)
+                        break;
+                    case 3:
+                        $(this).siblings("#addtarget").after(`<p class="added">${addtext}</p>`)
+                        break;
+                    case 0: 
+                        $(this).siblings("#addtarget").prepend(`<p class="added">${addtext}</p>`)
+                        break;
+                    case 1:
+                        $(this).siblings("#addtarget").append(`<p class="added">${addtext}</p>`)
+                }
+            })
+            $("#revert").click(function () {
+                $(".added").remove();
+            })
+            $("#addsuperbold").click(function() {
+                $(this).siblings("p").addClass("superbold");
+            })
+            $("#removesuperbold").click(function() {
+                $(this).siblings("p").removeClass("superbold");
+            })
+            $("#changeastext").click(function() {
+                console.log(textencode($("#changetext").val()));
+                $(this).siblings("p").text($("#changetext").val());
+            })
+            $("#changeashtml").click(function() {
+                $(this).siblings("p").html($("#changetext").val());
+            })
+            $("#reverttext").click(function() {
+                $(this).siblings("p").text("This content is being operated upon.");
+            })
+            
+        });
+    </script>
+
+</body>
+
+</html>
